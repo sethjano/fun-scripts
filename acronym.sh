@@ -427,20 +427,40 @@ list_acronyms() {
     echo -e "Total entries: ${GREEN}$count${RESET}"
     echo ""
 
-    # Group by acronym and show count
-    echo "$results" | cut -d'|' -f1,2,6 | sort -u | while IFS='|' read -r acr exp src; do
-        local defs=$(echo "$results" | grep "^${acr}|" | wc -l | tr -d ' ')
-        if [ $defs -gt 1 ]; then
+    # Efficient O(n) processing using python
+    echo "$results" | python3 -c '
+import sys
+from collections import OrderedDict
+
+data = OrderedDict()
+for line in sys.stdin:
+    fields = line.strip().split("|")
+    if len(fields) >= 6:
+        acr, exp, src = fields[0], fields[1], fields[5]
+        if acr not in data:
+            data[acr] = {"exp": exp, "src": src, "count": 0}
+        data[acr]["count"] += 1
+
+for i, (acr, info) in enumerate(data.items()):
+    if i >= 50:
+        break
+    count = info["count"]
+    exp = info["exp"]
+    src = info["src"]
+    print(f"{count}\t{acr}\t{exp}\t{src}")
+' | \
+    while IFS=$'\t' read -r defs acr exp src; do
+        if [ "$defs" -gt 1 ]; then
             echo -e "${CYAN}$acr${RESET} - $exp ${YELLOW}(+$((defs-1)) more)${RESET} ${BLUE}[$src]${RESET}"
         else
             echo -e "${CYAN}$acr${RESET} - $exp ${BLUE}[$src]${RESET}"
         fi
-    done | head -50
+    done
 
     if [ $count -gt 50 ]; then
         echo ""
         echo -e "${YELLOW}... showing first 50 of $count entries${RESET}"
-        echo -e "Use: ${BOLD}./ibm_acronym.sh list <filter>${RESET} to narrow results"
+        echo -e "Use: ${BOLD}./acronym.sh list <filter>${RESET} to narrow results"
     fi
 
     echo ""
