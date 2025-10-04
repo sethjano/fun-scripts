@@ -21,6 +21,11 @@ RESET='\033[0m'
 # Database schema v2.0
 # ACRONYM|Expansion|Definition|Category|Status|Source|SourcePub|SourceLink|NISTLink
 
+# Escape regex metacharacters for safe grep usage
+escape_regex() {
+    echo "$1" | sed 's/[]\.*^$[]/\\&/g'
+}
+
 # Word banks organized by first letter (mix of jargon + technical, ~2:1 funny-to-serious)
 WORDS_A="Agile Advanced Automated Abstract Adaptive Actionable Alignment Architecture Analytics API Asynchronous Abstraction"
 WORDS_B="Blockchain Business Buzzword Best-practice Bandwidth Bureaucratic Baseline Backend Broker Bridge Bootstrap"
@@ -127,21 +132,24 @@ generate_expansion() {
 # Case-insensitive search, but preserves original case in results
 lookup_acronym() {
     local acronym="$1"  # Preserve original case
-    grep -i "^${acronym}|" "$DB_FILE" 2>/dev/null
+    local safe_acronym=$(escape_regex "$acronym")
+    grep -i "^${safe_acronym}|" "$DB_FILE" 2>/dev/null
 }
 
 # Fuzzy search - find similar acronyms (case-insensitive)
 fuzzy_search() {
     local query="$1"  # Preserve case for display
     local max_suggestions=5
+    local safe_query=$(escape_regex "$query")
 
     # Strategy 1: Case-insensitive partial match
-    local partial=$(grep -i "^${query}" "$DB_FILE" 2>/dev/null | cut -d'|' -f1 | sort -u | head -n $max_suggestions)
+    local partial=$(grep -i "^${safe_query}" "$DB_FILE" 2>/dev/null | cut -d'|' -f1 | sort -u | head -n $max_suggestions)
 
     # Strategy 2: Prefix match (first 2-3 chars)
     if [ -z "$partial" ] && [ ${#query} -ge 2 ]; then
         local prefix="${query:0:2}"
-        partial=$(grep -i "^${prefix}" "$DB_FILE" 2>/dev/null | cut -d'|' -f1 | sort -u | head -n $max_suggestions)
+        local safe_prefix=$(escape_regex "$prefix")
+        partial=$(grep -i "^${safe_prefix}" "$DB_FILE" 2>/dev/null | cut -d'|' -f1 | sort -u | head -n $max_suggestions)
     fi
 
     # Strategy 3: Similar length acronyms (±1 character)
@@ -171,7 +179,8 @@ show_suggestions() {
             [ -z "$suggestion" ] && continue
 
             # Get first expansion for this acronym
-            local expansion=$(grep -i "^${suggestion}|" "$DB_FILE" | head -1 | cut -d'|' -f2)
+            local safe_suggestion=$(escape_regex "$suggestion")
+            local expansion=$(grep -i "^${safe_suggestion}|" "$DB_FILE" | head -1 | cut -d'|' -f2)
             echo -e "  ${count}. ${CYAN}${suggestion}${RESET} - ${expansion}"
             suggestion_array+=("$suggestion")
             ((count++))
@@ -207,8 +216,9 @@ save_acronym() {
 # Remove acronym from database (helper function) - case-insensitive
 remove_acronym() {
     local acronym="$1"
+    local safe_acronym=$(escape_regex "$acronym")
     local temp_file="${DB_FILE}.tmp"
-    grep -iv "^${acronym}|" "$DB_FILE" > "$temp_file"
+    grep -iv "^${safe_acronym}|" "$DB_FILE" > "$temp_file"
     mv "$temp_file" "$DB_FILE"
 }
 
@@ -407,7 +417,8 @@ list_acronyms() {
 
     if [ ! -z "$filter" ]; then
         echo -e "Filter: ${CYAN}$filter${RESET}"
-        local results=$(grep -i "$filter" "$DB_FILE" | grep -v "^#")
+        local safe_filter=$(escape_regex "$filter")
+        local results=$(grep -i "$safe_filter" "$DB_FILE" | grep -v "^#")
     else
         local results=$(grep -v "^#" "$DB_FILE")
     fi
