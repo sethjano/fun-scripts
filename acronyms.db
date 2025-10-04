@@ -4439,5 +4439,5 @@ ZTA|Zero Trust Architecture|A security model, a set of system design principles,
 ZTNA|zero trust network access||technology|VERIFIED|NIST|||https://csrc.nist.gov/glossary/term/ztna
 2F|2 Flexible||generated|GENERATED|GENERATED|||
 ZFS|Zettabyte File System||technology|VERIFIED|MANUAL|||
-IBM|Initiative Bridge Mission-critical|generated|GENERATED
-EMACS|Executive Mission-critical Asynchronous Collaborative Solution|generated|GENERATED
+IBM|Initiative Bridge Mission-critical||generated|GENERATED|GENERATED|||
+EMACS|Executive Mission-critical Asynchronous Collaborative Solution||generated|GENERATED|GENERATED|||
