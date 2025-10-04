@@ -1,0 +1,354 @@
+#+TITLE: Terminal Utilities & Fun Scripts
+#+AUTHOR: Seth Jano
+#+EMAIL: https://github.com/sethjano
+#+STARTUP: overview
+
+* Overview
+
+Collection of terminal utilities and experimental tools for productivity and entertainment.
+
+** Main Tools
+
+- [[file:acronym.sh][acronym.sh]] - Tech Acronym Decoder with NIST CSRC data (4,400+ verified acronyms)
+- [[file:avi_loeb.sh][avi_loeb.sh]] - Satirical commentary generator
+
+** Utility Scripts
+
+- [[file:import_nist_fast.sh][import_nist_fast.sh]] - Import NIST CSRC glossary data
+- [[file:migrate_schema.sh][migrate_schema.sh]] - Database schema migration tool
+
+* Acronym Decoder
+
+=acronym.sh= - A powerful tech acronym lookup tool with 4,400+ verified definitions from the NIST CSRC (Cybersecurity Resource Center) glossary.
+
+** Features
+
+- 🔍 *4,400+ Verified Acronyms* from NIST CSRC glossary
+- 📚 *Full Definitions* with source publication links (NIST Special Publications)
+- 🔗 *Direct Links* to NIST glossary pages and DOI publications
+- 🎯 *Fuzzy Search* with interactive suggestions for typos
+- 🎭 *Humorous Alternatives* for every lookup
+- 🤖 *Auto-Generation* of technical expansions for unknown terms
+- 💾 *Persistent Learning* - saves new acronyms to database
+- 📊 *Multiple Definitions* per acronym (e.g., RAID has 3, API has 9)
+- 🔄 *Smart Replacement* - AI-generated entries auto-upgrade when verified
+
+** Installation
+
+#+BEGIN_SRC bash
+# Clone the repository
+git clone https://github.com/sethjano/fun-scripts.git
+cd fun-scripts
+
+# Make scripts executable (already done, but just in case)
+chmod +x acronym.sh avi_loeb.sh
+
+# Optional: Add to PATH
+echo 'export PATH="$PATH:~/path/to/fun-scripts"' >> ~/.bashrc
+#+END_SRC
+
+** Requirements
+
+- Bash 3.2+ (compatible with macOS default bash)
+- =jq= for NIST import (optional, only needed for re-importing NIST data)
+
+#+BEGIN_SRC bash
+# Install jq if needed (for NIST import only)
+brew install jq  # macOS
+apt-get install jq  # Ubuntu/Debian
+#+END_SRC
+
+** Usage
+
+*** Basic Lookup
+
+#+BEGIN_SRC bash
+# Look up an acronym (shows definitions + sources + funny alternatives)
+./acronym.sh 2FA
+./acronym.sh API
+./acronym.sh RAID
+#+END_SRC
+
+*Example Output:*
+
+#+BEGIN_EXAMPLE
+=== Acronym Decoder ===
+Looking up: 2FA
+
+✓ Found in database (2 definitions):
+
+📖 Definition 1: Multifactor Authentication [security]
+   Authentication using two or more factors to achieve authentication.
+   Factors include: (i) something you know (e.g., password/PIN);
+   (ii) something you have (e.g., cryptographic device, token);
+   or (iii) something you are (e.g., biometric).
+
+   📚 Source: NIST SP 1800-27B
+      → https://doi.org/10.6028/NIST.SP.1800-27
+   🔗 NIST Glossary: https://csrc.nist.gov/glossary/term/2fa
+
+🎭 Humorous interpretations:
+  1. Two-Factor Annoyance 😄
+  2. Twice-Failed Authentication 😄
+  3. Terribly Frustrating Access 😄
+#+END_EXAMPLE
+
+*** Fuzzy Search
+
+When you mistype or the acronym isn't found, get interactive suggestions:
+
+#+BEGIN_SRC bash
+./acronym.sh RAD
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+❓ 'RAD' not found. Did you mean one of these?
+
+  1. RAID - Redundant Array of Independent Disks
+  2. RADIUS - Remote Authentication Dial-In User Service
+  3. RAM - Random Access Memory
+
+Select (1-3) or Enter to generate new: 1
+#+END_EXAMPLE
+
+*** Add New Acronyms
+
+#+BEGIN_SRC bash
+# Add a verified acronym
+./acronym.sh add "SaaS" "Software as a Service" service
+
+# Add with custom category
+./acronym.sh add "CICD" "Continuous Integration Continuous Deployment" practice
+
+# Force replace existing entries
+./acronym.sh add --force "API" "Application Programming Interface" technology
+#+END_SRC
+
+*** List & Search
+
+#+BEGIN_SRC bash
+# List all acronyms (shows first 50)
+./acronym.sh list
+
+# Filter listings
+./acronym.sh list security
+./acronym.sh list NIST
+
+# Show database statistics
+./acronym.sh stats
+#+END_SRC
+
+*** Promote AI-Generated Entries
+
+#+BEGIN_SRC bash
+# Upgrade an AI-generated entry to verified
+./acronym.sh promote "DEMO" "Demonstration Environment" tech
+#+END_SRC
+
+** Database
+
+*** Structure
+
+Format: =ACRONYM|Expansion|Definition|Category|Status|Source|SourcePub|SourceLink|NISTLink=
+
+- *Acronym*: The acronym (case-preserved: DoD, SaaS, DDoS)
+- *Expansion*: Full text expansion
+- *Definition*: Detailed definition (from NIST or user)
+- *Category*: technology, security, product, service, etc.
+- *Status*: VERIFIED (real) or GENERATED (AI placeholder)
+- *Source*: MANUAL (user-added), NIST (NIST CSRC), GENERATED (AI)
+- *SourcePub*: Source publication (e.g., "NIST SP 800-53")
+- *SourceLink*: DOI link to publication
+- *NISTLink*: Link to NIST glossary page
+
+*** Categories
+
+| Category     | Count | Description                           |
+|--------------+-------+---------------------------------------|
+| technology   |  3567 | General technology terms              |
+| security     |   616 | Cybersecurity, encryption, auth       |
+| role         |    90 | Job titles, organizational roles      |
+| standard     |    79 | Standards, specifications, RFCs       |
+| product      |    15 | Software/hardware products            |
+| service      |     6 | Cloud services, APIs                  |
+| business     |     5 | Business/financial terms              |
+| protocol     |     4 | Network protocols                     |
+| format       |     4 | File formats, data structures         |
+| _others_     |    ~30| 16+ more specialized categories       |
+
+*** Statistics
+
+- Total entries: ~4,400
+- Unique acronyms: ~3,000
+- NIST entries: 4,325
+- Manual entries: 100+
+- AI-generated: Variable (auto-created, user can verify)
+
+*** Data Sources
+
+1. *NIST CSRC Glossary* (primary source)
+   - 9,837 total terms in NIST glossary
+   - 4,325 acronyms imported with quality filtering
+   - Authoritative cybersecurity and IT definitions
+   - Direct links to NIST Special Publications
+
+2. *User Contributions* (manual additions)
+   - Custom acronyms via =add= command
+   - Domain-specific terms
+   - Organizational acronyms
+
+3. *AI Generation* (fallback)
+   - Auto-generates plausible technical expansions
+   - Letter-matching algorithm (T-P-F → Transaction Processing Facility)
+   - Saves to database for future reference
+   - Can be upgraded to verified with =promote= command
+
+** Advanced Features
+
+*** Case Sensitivity
+
+The tool preserves case while allowing case-insensitive searches:
+
+#+BEGIN_SRC bash
+./acronym.sh DoD    # Finds "DoD" (Department of Defense)
+./acronym.sh dod    # Also finds "DoD" (case-insensitive)
+./acronym.sh DOD    # Also finds "DoD"
+
+# But stores with original case:
+./acronym.sh add "SaaS" "Software as a Service" service  # Stores as "SaaS"
+./acronym.sh add "DDoS" "Distributed Denial of Service" security  # Stores as "DDoS"
+#+END_SRC
+
+*** Smart Replacement
+
+AI-generated entries are automatically replaced when you add verified definitions:
+
+#+BEGIN_SRC bash
+# First lookup (unknown) - generates placeholder
+./acronym.sh XYZ
+# Output: "eXtreme YAML Zone" [GENERATED]
+
+# Add verified definition - automatically replaces generated
+./acronym.sh add "XYZ" "Real Definition Here" tech
+# Output: ✓ Replaced generated entry: XYZ is now verified
+#+END_SRC
+
+*** Multiple Definitions
+
+Many acronyms have multiple valid expansions:
+
+- *RAID*: 3 definitions (Independent Disks, Inexpensive Disks, etc.)
+- *API*: 9 definitions (Application Programming Interface, American Petroleum Institute, etc.)
+- *RSA*: 12 definitions (cryptography, algorithm variants, etc.)
+
+** Emacs Integration
+
+For best display in Emacs, use =ansi-term= or =vterm=:
+
+#+BEGIN_SRC elisp
+M-x ansi-term RET
+/bin/bash RET
+cd ~/path/to/fun-scripts
+./acronym.sh 2FA
+#+END_SRC
+
+Full color, emoji, and formatting support work in =ansi-term= and =vterm=.
+
+* Avi Loeb Commentary Generator
+
+=avi_loeb.sh= - Generates satirical commentary in the distinctive style of physicist Avi Loeb.
+
+** Usage
+
+#+BEGIN_SRC bash
+# Generate commentary on any topic
+./avi_loeb.sh "coffee maker"
+
+# Or run interactively
+./avi_loeb.sh
+#+END_SRC
+
+*Example Output:*
+
+#+BEGIN_EXAMPLE
+=== Avi Loeb Commentary Generator ===
+Topic: coffee maker
+
+---
+
+As I've argued extensively in my latest preprint, the coffee maker
+exhibits characteristics inconsistent with natural terrestrial appliances.
+Its precise temperature regulation suggests possible technosignatures.
+The establishment dismisses this, but as Galileo knew, orthodoxy
+often blinds us to extraordinary truths hiding in plain sight...
+
+---
+Disclaimer: This is satire. For actual Avi Loeb commentary,
+see his real scientific work and popular writing.
+#+END_EXAMPLE
+
+** Features
+
+- Multiple randomized templates
+- Authentic Loeb-isms: "As I've argued...", "The establishment...", "Galileo knew..."
+- References to Oumuamua, interstellar objects, and technosignatures
+- Academic gravitas applied to absurd topics
+- Perfect for lightening the mood in research meetings
+
+* NIST Data Import
+
+** Re-importing NIST CSRC Glossary
+
+The database already contains 4,325 NIST acronyms. To re-import or update:
+
+#+BEGIN_SRC bash
+# Download NIST glossary (if not already present)
+curl -L -o nist-glossary.zip "https://csrc.nist.gov/csrc/media/glossary/glossary-export.zip"
+unzip nist-glossary.zip
+
+# Run fast import (requires jq)
+./import_nist_fast.sh
+#+END_SRC
+
+The import script includes data quality filtering:
+- Skips HTML artifacts (=<em>=, =<i>=)
+- Filters bad expansions (e.g., "abstraction" for "2FA")
+- Removes single generic words
+- Extracts definitions and source links
+- Categorizes by content (security, technology, etc.)
+
+** Database Migration
+
+If you need to update the database schema:
+
+#+BEGIN_SRC bash
+./migrate_schema.sh
+#+END_SRC
+
+This script migrates from the old 4-field format to the new 9-field format with source tracking.
+
+* Contributing
+
+Contributions welcome! Please ensure:
+
+1. No brand names in commit messages
+2. Scripts remain bash 3.2+ compatible (macOS default)
+3. Preserve case-insensitive search with case-sensitive storage
+4. Add documentation to =index.org= for new scripts
+
+* License
+
+MIT License - see LICENSE file for details
+
+* Disclaimer
+
+- *Acronym Decoder*: Data sourced from NIST CSRC (public domain) and user contributions
+- *Avi Loeb Generator*: Satire/parody - not affiliated with Avi Loeb
+
+All scripts provided "as-is" for entertainment and educational purposes.
+
+* Links
+
+- GitHub: https://github.com/sethjano/fun-scripts
+- NIST CSRC Glossary: https://csrc.nist.gov/glossary
+- Issues & Feature Requests: https://github.com/sethjano/fun-scripts/issues

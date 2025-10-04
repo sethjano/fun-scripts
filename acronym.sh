@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ibm_acronym.sh - IBM/Tech Acronym Decoder & Generator
+# acronym.sh - Tech Acronym Decoder & Generator
 # V3: Enhanced with NIST CSRC glossary data, definitions, source links, and fuzzy search
 # Looks up real acronyms from 4000+ NIST terms, generates funny alternatives
 # Compatible with bash 3.2+ (macOS default)
@@ -331,7 +331,7 @@ lookup_and_display() {
     local acronym="$1"  # Preserve case!
 
     echo ""
-    echo -e "${BOLD}=== IBM Acronym Decoder ===${RESET}"
+    echo -e "${BOLD}=== Acronym Decoder ===${RESET}"
     echo -e "Looking up: ${CYAN}$acronym${RESET}"
     echo ""
 
@@ -465,26 +465,26 @@ show_stats() {
 # Show help
 show_help() {
     cat << 'EOF'
-IBM/Tech Acronym Decoder & Generator v3.0
+Tech Acronym Decoder & Generator v3.0
 
 USAGE:
-  ./ibm_acronym.sh <acronym>              Look up or generate acronym
-  ./ibm_acronym.sh list [filter]          List all acronyms (optional filter)
-  ./ibm_acronym.sh stats                  Show database statistics
-  ./ibm_acronym.sh add <ACRONYM> "Expansion" [category]
-                                          Add verified acronym
-  ./ibm_acronym.sh add --force <ACRONYM> "Expansion" [category]
-                                          Force replace all existing entries
-  ./ibm_acronym.sh promote <ACRONYM> "Expansion" [category]
-                                          Upgrade AI-generated to verified
+  ./acronym.sh <acronym>              Look up or generate acronym
+  ./acronym.sh list [filter]          List all acronyms (optional filter)
+  ./acronym.sh stats                  Show database statistics
+  ./acronym.sh add <ACRONYM> "Expansion" [category]
+                                      Add verified acronym
+  ./acronym.sh add --force <ACRONYM> "Expansion" [category]
+                                      Force replace all existing entries
+  ./acronym.sh promote <ACRONYM> "Expansion" [category]
+                                      Upgrade AI-generated to verified
 
 EXAMPLES:
-  ./ibm_acronym.sh TPF                    # Look up TPF
-  ./ibm_acronym.sh 2FA                    # Look up 2FA (NIST data)
-  ./ibm_acronym.sh list IBM               # List IBM-related acronyms
-  ./ibm_acronym.sh stats                  # Show database stats
-  ./ibm_acronym.sh add TPF "Transaction Processing Facility" product
-  ./ibm_acronym.sh promote DEMO "Demonstration Environment" tech
+  ./acronym.sh API                    # Look up API
+  ./acronym.sh 2FA                    # Look up 2FA (NIST data)
+  ./acronym.sh list security          # List security-related acronyms
+  ./acronym.sh stats                  # Show database stats
+  ./acronym.sh add TPF "Transaction Processing Facility" product
+  ./acronym.sh promote DEMO "Demonstration Environment" tech
 
 FEATURES:
   • 4000+ verified acronyms from NIST CSRC glossary

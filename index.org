@@ -25,7 +25,7 @@ This directory contains fun scripts, satire generators, and experimental tools t
 
 ** Acronym Tools
 
-*** [[file:ibm_acronym.sh][ibm_acronym.sh]] - IBM/Tech Acronym Decoder & Generator v3.0
+*** [[file:acronym.sh][acronym.sh]] - Tech Acronym Decoder & Generator v3.0
 *Created:* [2025-10-02 18:55:00]
 *Updated:* [2025-10-03 19:30:00]
 *Purpose:* Look up real tech acronyms from NIST CSRC glossary, generate funny alternatives, with definitions and source links
@@ -37,29 +37,29 @@ A powerful yet humorous tool that decodes 4000+ technology acronyms from the aut
 *Usage:*
 #+BEGIN_SRC bash
 # Look up an acronym (shows definitions, sources, + funny versions)
-./ibm_acronym.sh 2FA
-./ibm_acronym.sh TPF
+./acronym.sh 2FA
+./acronym.sh TPF
 
 # Add a new verified acronym
-./ibm_acronym.sh add WATSON "Witty AI Tool" product
+./acronym.sh add WATSON "Witty AI Tool" product
 
 # List all acronyms (or filter)
-./ibm_acronym.sh list
-./ibm_acronym.sh list NIST
+./acronym.sh list
+./acronym.sh list NIST
 
 # Show database statistics
-./ibm_acronym.sh stats
+./acronym.sh stats
 
 # Fuzzy search suggestions
-./ibm_acronym.sh RAD   # Suggests RAID, etc.
+./acronym.sh RAD   # Suggests RAID, etc.
 
 # Promote AI-generated to verified
-./ibm_acronym.sh promote DEMO "Demonstration Environment" tech
+./acronym.sh promote DEMO "Demonstration Environment" tech
 #+END_SRC
 
 *Example Output:*
 #+BEGIN_EXAMPLE
-=== IBM Acronym Decoder ===
+=== Acronym Decoder ===
 Looking up: 2FA
 
 ✓ Found in database (2 definitions):
