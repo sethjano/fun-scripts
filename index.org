@@ -1,0 +1,242 @@
+#+TITLE: Fun Scripts & Experimental Tools
+#+AUTHOR: Research Analysis
+#+DATE: [2025-10-02 18:45:00]
+#+FILETAGS: :tools:satire:experimental:
+#+STARTUP: overview
+
+* Quick Navigation
+
+** Project Documents
+- [[file:../README.org][README]] - Project overview
+- [[file:../HOWTO.org][HOWTO Guide]] - Usage instructions
+- [[file:../index.org][File Index]] - All source files
+
+* Overview
+:PROPERTIES:
+:CREATED: [2025-10-02 18:45:00]
+:PURPOSE: Collection of experimental, satirical, and less-serious tools
+:END:
+
+This directory contains fun scripts, satire generators, and experimental tools that don't fit into the main research workflow but might be entertaining or occasionally useful.
+
+⚠️ *Warning:* These scripts are for entertainment purposes. Use at your own risk!
+
+* Script Collection
+
+** Acronym Tools
+
+*** [[file:ibm_acronym.sh][ibm_acronym.sh]] - IBM/Tech Acronym Decoder & Generator v3.0
+*Created:* [2025-10-02 18:55:00]
+*Updated:* [2025-10-03 19:30:00]
+*Purpose:* Look up real tech acronyms from NIST CSRC glossary, generate funny alternatives, with definitions and source links
+*Category:* Utility / Humor Hybrid
+
+*Description:*
+A powerful yet humorous tool that decodes 4000+ technology acronyms from the authoritative NIST CSRC (Cybersecurity Resource Center) glossary. Provides full definitions, source publication links (NIST Special Publications), and direct links to NIST glossary pages. Also generates hilarious alternative interpretations and auto-generates plausible technical expansions for unknown acronyms. Features fuzzy search to suggest similar acronyms when you make typos.
+
+*Usage:*
+#+BEGIN_SRC bash
+# Look up an acronym (shows definitions, sources, + funny versions)
+./ibm_acronym.sh 2FA
+./ibm_acronym.sh TPF
+
+# Add a new verified acronym
+./ibm_acronym.sh add WATSON "Witty AI Tool" product
+
+# List all acronyms (or filter)
+./ibm_acronym.sh list
+./ibm_acronym.sh list NIST
+
+# Show database statistics
+./ibm_acronym.sh stats
+
+# Fuzzy search suggestions
+./ibm_acronym.sh RAD   # Suggests RAID, etc.
+
+# Promote AI-generated to verified
+./ibm_acronym.sh promote DEMO "Demonstration Environment" tech
+#+END_SRC
+
+*Example Output:*
+#+BEGIN_EXAMPLE
+=== IBM Acronym Decoder ===
+Looking up: 2FA
+
+✓ Found in database (2 definitions):
+
+📖 Definition 1: Multifactor Authentication [security]
+   Authentication using two or more factors to achieve authentication.
+   Factors include: (i) something you know (e.g., password/PIN);
+   (ii) something you have (e.g., cryptographic device, token);
+   or (iii) something you are (e.g., biometric).
+
+   📚 Source: NIST SP 1800-27B
+      → https://doi.org/10.6028/NIST.SP.1800-27
+   🔗 NIST Glossary: https://csrc.nist.gov/glossary/term/2fa
+
+📖 Definition 2: Two-Factor Authentication [security]
+   [Similar definition with NIST sources]
+
+🎭 Humorous interpretations:
+  1. Two-Factor Annoyance 😄
+  2. Twice-Failed Authentication 😄
+  3. Terribly Frustrating Access 😄
+#+END_EXAMPLE
+
+*Features:*
+- 4,325+ NIST CSRC verified acronyms (2FA, API, RSA, AES, RAID, etc.)
+- Full definitions from authoritative cybersecurity/IT sources
+- Direct links to NIST Special Publications (DOI links)
+- Links to NIST CSRC glossary pages
+- Fuzzy search suggestions for typos/near-misses
+- Multiple definitions per acronym (e.g., RAID has 3, API has 9)
+- Auto-generates technical expansions for unknown acronyms
+- Creates 3 funny alternatives for every lookup
+- Smart replacement: AI-generated entries auto-upgrade when you add verified
+- Persistent database that grows over time
+- Color-coded output (NIST=blue, Manual=cyan, AI-generated=yellow)
+- Perfect for technical docs, meetings, Slack responses, or just fun
+
+*Database Structure:*
+- Format: =ACRONYM|Expansion|Definition|Category|Status|Source|SourcePub|SourceLink|NISTLink=
+- Sources: MANUAL (user-added), NIST (NIST CSRC), GENERATED (AI-created)
+- Status: VERIFIED (real) or GENERATED (AI placeholder)
+- Supports multiple rows per acronym for multiple definitions
+- Auto-saves new expansions when encountered
+- One-time NIST import with data quality filtering
+
+*Data Sources:*
+- NIST CSRC Glossary (9,837 terms, 4,325 acronyms imported)
+- Manual user additions
+- AI-generated technical expansions
+
+*Categories:*
+The database includes acronyms organized into the following categories:
+
+| Category     | Count | Description                                    |
+|--------------+-------+------------------------------------------------|
+| technology   |  3567 | General technology terms                       |
+| security     |   616 | Cybersecurity, encryption, authentication      |
+| role         |    90 | Job titles and organizational roles            |
+| standard     |    79 | Standards, specifications, RFCs                |
+| product      |    15 | Software/hardware products                     |
+| metric       |     8 | Performance metrics, measurements              |
+| service      |     6 | Cloud services, APIs                           |
+| title        |     5 | Professional titles                            |
+| language     |     5 | Programming languages                          |
+| business     |     5 | Business/financial terms                       |
+| software     |     4 | Software systems                               |
+| protocol     |     4 | Network protocols                              |
+| program      |     4 | Programs, initiatives                          |
+| format       |     4 | File formats, data structures                  |
+| architecture |     3 | System architecture terms                      |
+| pricing      |     2 | Pricing models                                 |
+| practice     |     2 | Best practices, methodologies                  |
+| hardware     |     2 | Hardware components                            |
+| financial    |     2 | Financial terms                                |
+| department   |     2 | Organizational departments                     |
+| platform     |     1 | Platform technologies                          |
+| organization |     1 | Organizations                                  |
+| legal        |     1 | Legal terms                                    |
+| design       |     1 | Design patterns                                |
+| database     |     1 | Database systems                               |
+
+Use categories when adding new acronyms: =./ibm_acronym.sh add XYZ "expansion" category=
+
+** Satire & Commentary Generators
+
+*** [[file:avi_loeb.sh][avi_loeb.sh]] - Avi Loeb Commentary Generator
+*Created:* [2025-10-02 18:45:00]
+*Purpose:* Satirical commentary generator in the style of physicist Avi Loeb
+*Category:* Satire / Entertainment
+
+*Description:*
+Generates over-the-top cosmic commentary on mundane topics in the distinctive style of theoretical physicist Avi Loeb. Takes any topic as input and produces grandiose observations connecting it to extraterrestrial intelligence, interstellar objects, and the Galilean pursuit of truth.
+
+*Usage:*
+#+BEGIN_SRC bash
+# Generate commentary on any topic
+./avi_loeb.sh "coffee maker"
+
+# Or run interactively
+./avi_loeb.sh
+#+END_SRC
+
+*Example Output:*
+#+BEGIN_EXAMPLE
+As I've argued in my latest preprint, the coffee maker exhibits
+characteristics inconsistent with natural terrestrial appliances.
+Its precise temperature regulation suggests possible technosignatures.
+The establishment dismisses this, but as Galileo knew, orthodoxy
+often blinds us to extraordinary truths hiding in plain sight...
+#+END_EXAMPLE
+
+*Features:*
+- Multiple randomized templates
+- Authentic Loeb-isms: "As I've argued...", "The establishment...", "Galileo knew..."
+- References to Oumuamua, interstellar objects, and technosignatures
+- Academic gravitas applied to absurd topics
+- Perfect for lightening the mood in research meetings
+
+** Future Scripts
+
+*** Planned Additions
+- [ ] =buzzword_generator.sh= - Enterprise buzzword bingo generator
+- [ ] =jargon_translator.sh= - Translate plain English to corporate speak
+- [ ] =meeting_simulator.sh= - Generate realistic but meaningless meeting dialogue
+- [ ] =metric_inflation.sh= - Make any metric sound 10x more impressive
+- [ ] =synergy_optimizer.sh= - Generate synergistic value propositions
+- [ ] =ibm_acronym_web.py= - Web app version of ibm_acronym.sh
+- [ ] =slack_bot.py= - Slack integration for acronym decoder
+
+* Usage Guidelines
+
+** When to Use These Scripts
+
+✅ *Good uses:*
+- Breaking tension in long meetings
+- Satirizing overblown claims
+- Team building and humor
+- Creative writing exercises
+- Understanding rhetorical patterns
+
+❌ *Bad uses:*
+- Actual client presentations
+- Formal documentation
+- Making real scientific claims
+- Replacing genuine analysis
+
+** Contributing New Scripts
+
+To add a new script to this collection:
+
+1. Create the script file in =fun-scripts/=
+2. Make it executable: =chmod +x scriptname.sh=
+3. Add an entry to this index
+4. Include:
+   - Purpose/category
+   - Usage examples
+   - Sample output
+   - Any warnings or disclaimers
+
+* Technical Notes
+
+** Script Requirements
+- Most scripts require bash/zsh
+- Some may use standard Unix tools (grep, sed, awk)
+- No external dependencies unless noted
+
+** Testing
+These scripts are provided "as-is" with no warranty. Test before using in any context where accuracy matters (hint: probably shouldn't use satire scripts where accuracy matters).
+
+* Disclaimer
+
+All scripts in this directory are for entertainment and educational purposes only. Any resemblance to actual scientific claims, corporate strategies, or serious research is purely coincidental and probably satirical.
+
+The Avi Loeb commentary generator is a parody and is not affiliated with, endorsed by, or representative of the actual Avi Loeb or his scientific work.
+
+* Cross-References
+
+- [[file:../scripts/][Main Scripts Directory]] - Serious automation tools
+- [[file:../README.org][Project README]] - Actual research work
+- [[file:../synthesis/][Synthesis Documents]] - Real value propositions (not satire)

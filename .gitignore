@@ -1,0 +1,13 @@
+# Backup files
+*.backup
+*.bak
+*.old
+*_backup.sh
+ibm_acronym_v*.sh
+
+# NIST data files (too large, can be re-downloaded)
+nist-glossary.zip
+glossary-export.json
+
+# Temporary files
+*.tmp
