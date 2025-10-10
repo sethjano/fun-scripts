@@ -493,6 +493,24 @@ show_stats() {
     echo ""
 }
 
+# Show random acronym
+show_random() {
+    # Get a random unique acronym
+    local random_acr=$(cut -d'|' -f1 "$DB_FILE" | grep "^[A-Z0-9]" | sort -u | shuf -n 1)
+
+    if [ -z "$random_acr" ]; then
+        echo -e "${RED}❌ Error: No acronyms found in database${RESET}"
+        exit 1
+    fi
+
+    echo ""
+    echo -e "${BOLD}🎲 Random Acronym:${RESET}"
+    echo ""
+
+    # Look up and display the random acronym
+    lookup_and_display "$random_acr"
+}
+
 # Show help
 show_help() {
     cat << 'EOF'
@@ -501,6 +519,7 @@ Tech Acronym Decoder & Generator v3.0
 USAGE:
   ./acronym.sh <acronym>              Look up or generate acronym
   ./acronym.sh list [filter]          List all acronyms (optional filter)
+  ./acronym.sh random                 Display a random acronym
   ./acronym.sh stats                  Show database statistics
   ./acronym.sh add <ACRONYM> "Expansion" [category]
                                       Add verified acronym
@@ -512,6 +531,7 @@ USAGE:
 EXAMPLES:
   ./acronym.sh API                    # Look up API
   ./acronym.sh 2FA                    # Look up 2FA (NIST data)
+  ./acronym.sh random                 # Show a random acronym
   ./acronym.sh list security          # List security-related acronyms
   ./acronym.sh stats                  # Show database stats
   ./acronym.sh add TPF "Transaction Processing Facility" product
@@ -559,6 +579,9 @@ main() {
             ;;
         list)
             list_acronyms "$2"
+            ;;
+        random)
+            show_random
             ;;
         stats)
             show_stats
