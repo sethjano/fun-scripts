@@ -293,6 +293,33 @@ promote_acronym() {
     fi
 }
 
+# Append a new definition to an existing acronym (preserves all existing entries)
+append_definition() {
+    local acronym="$1"  # Preserve case!
+    local expansion="$2"
+    local category="${3:-other}"
+
+    # Check if exists (case-insensitive)
+    local existing=$(lookup_acronym "$acronym")
+
+    if [ ! -z "$existing" ]; then
+        local count=$(echo "$existing" | wc -l | tr -d ' ')
+        echo -e "${BLUE}ℹ  $acronym already has $count definition(s)${RESET}"
+        echo -e "   Adding new definition without removing existing ones..."
+    fi
+
+    # Append new entry without removing existing ones
+    echo "${acronym}|${expansion}||${category}|VERIFIED|MANUAL|||" >> "$DB_FILE"
+
+    if [ ! -z "$existing" ]; then
+        echo -e "${GREEN}✓ Appended new definition for $acronym${RESET}"
+        echo -e "  ${CYAN}$expansion${RESET} ${BLUE}[$category]${RESET}"
+        echo -e "  Total definitions: $((count + 1))"
+    else
+        echo -e "${GREEN}✓ Added: $acronym = $expansion${RESET} ${BLUE}[$category]${RESET}"
+    fi
+}
+
 # Display a single definition entry with formatting
 display_definition() {
     local num="$1"
@@ -376,12 +403,47 @@ lookup_and_display() {
             echo ""
         fi
 
-        # Generate and save a new expansion
-        echo -e "${BLUE}Generating technical expansion...${RESET}"
-        local generated=$(generate_expansion "$acronym")
-        save_acronym "$acronym" "$generated" "GENERATED"
-        echo -e "  ${CYAN}$generated${RESET} ${YELLOW}(auto-generated, saved to DB)${RESET}"
+        # Generate a guess with a warning
+        echo -e "${YELLOW}🤔 Taking a wild guess...${RESET}"
+        echo -e "${YELLOW}⚠️  Warning: This is probably wrong, or even hilarious!${RESET}"
         echo ""
+        local generated=$(generate_expansion "$acronym")
+        echo -e "  ${CYAN}$generated${RESET} ${YELLOW}(auto-generated guess)${RESET}"
+        echo ""
+
+        # Prompt user to add the real definition
+        echo -e "${BOLD}Would you like to add the real definition? (y/n):${RESET} "
+        read -r add_real
+
+        if [[ "$add_real" =~ ^[Yy]$ ]]; then
+            echo ""
+            echo -e "${GREEN}Great! Let's add the real definition.${RESET}"
+            echo ""
+            echo -e -n "Enter the expansion for ${CYAN}${acronym}${RESET}: "
+            read -r real_expansion
+
+            if [ ! -z "$real_expansion" ]; then
+                echo ""
+                echo -e -n "Enter category (optional, default: other): "
+                read -r category
+                category="${category:-other}"
+
+                # Save as verified entry
+                echo "${acronym}|${real_expansion}||${category}|VERIFIED|MANUAL|||" >> "$DB_FILE"
+                echo ""
+                echo -e "${GREEN}✓ Added verified definition:${RESET}"
+                echo -e "  ${CYAN}${acronym}${RESET} = ${real_expansion} ${BLUE}[${category}]${RESET}"
+                echo ""
+            else
+                echo -e "${YELLOW}⚠ No expansion entered, skipping...${RESET}"
+                echo ""
+            fi
+        else
+            # Save the generated guess to database
+            save_acronym "$acronym" "$generated" "GENERATED"
+            echo -e "${YELLOW}Guess saved to database (you can promote it later with 'promote' command)${RESET}"
+            echo ""
+        fi
     fi
 
     # Always show funny alternatives
@@ -522,9 +584,11 @@ USAGE:
   ./acronym.sh random                 Display a random acronym
   ./acronym.sh stats                  Show database statistics
   ./acronym.sh add <ACRONYM> "Expansion" [category]
-                                      Add verified acronym
+                                      Add verified acronym (rejects if exists)
   ./acronym.sh add --force <ACRONYM> "Expansion" [category]
                                       Force replace all existing entries
+  ./acronym.sh append <ACRONYM> "Expansion" [category]
+                                      Add new definition (keeps existing ones)
   ./acronym.sh promote <ACRONYM> "Expansion" [category]
                                       Upgrade AI-generated to verified
 
@@ -535,6 +599,7 @@ EXAMPLES:
   ./acronym.sh list security          # List security-related acronyms
   ./acronym.sh stats                  # Show database stats
   ./acronym.sh add TPF "Transaction Processing Facility" product
+  ./acronym.sh append ODM "IBM Operational Decision Manager" product
   ./acronym.sh promote DEMO "Demonstration Environment" tech
 
 FEATURES:
@@ -592,6 +657,9 @@ main() {
             else
                 add_verified "$2" "$3" "$4"
             fi
+            ;;
+        append)
+            append_definition "$2" "$3" "$4"
             ;;
         promote)
             promote_acronym "$2" "$3" "$4"
