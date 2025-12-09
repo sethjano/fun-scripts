@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News Archives - The Onion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Libre+Franklin:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Libre Franklin', sans-serif;
+      background-color: #fff;
+      color: #1a1a1a;
+      line-height: 1.4;
+    }
+
+    .header {
+      background-color: #006B3A;
+      padding: 12px 20px;
+      text-align: center;
+    }
+
+    .logo {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 2.5rem;
+      color: #fff;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      font-style: italic;
+    }
+
+    .nav {
+      background-color: #1a1a1a;
+      padding: 8px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      color: #006B3A;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .section-header {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 1.5rem;
+      color: #006B3A;
+      border-bottom: 3px solid #006B3A;
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .article {
+      border-bottom: 1px solid #ddd;
+      padding: 20px 0;
+    }
+
+    .article:last-child {
+      border-bottom: none;
+    }
+
+    .article-category {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: #006B3A;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .article-headline {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 1.4rem;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+    }
+
+    .article-headline a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .article-headline a:hover {
+      color: #006B3A;
+    }
+
+    .article-excerpt {
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .featured {
+      background-color: #f8f8f5;
+      padding: 24px;
+      margin-bottom: 30px;
+    }
+
+    .featured .article-headline {
+      font-size: 2rem;
+    }
+
+    .byline {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 8px;
+    }
+
+    .explainer-box {
+      background-color: #006B3A;
+      color: #fff;
+      padding: 20px 24px;
+      margin: 30px 0;
+    }
+
+    .explainer-box .article-category {
+      color: #90E0B0;
+    }
+
+    .explainer-box .article-headline {
+      color: #fff;
+    }
+
+    .explainer-box .article-excerpt {
+      color: #d0e8d8;
+    }
+
+    .opinion-tag {
+      background-color: #c9302c;
+      color: #fff;
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    .breaking-tag {
+      background-color: #d9534f;
+      color: #fff;
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .footer {
+      background-color: #1a1a1a;
+      color: #888;
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.75rem;
+      margin-top: 40px;
+    }
+
+    .footer a {
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    .date-stamp {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo"><span>The</span> Onion</div>
+  </header>
+
+  <nav class="nav">
+    <a href="#">News</a>
+    <a href="#">Politics</a>
+    <a href="#">Entertainment</a>
+    <a href="#">Sports</a>
+    <a href="#">Local</a>
+    <a href="#">Opinion</a>
+    <a href="#">Video</a>
+  </nav>
+
+  <div class="date-stamp">November 8, 2035 &bull; Vol. 71 Issue 45</div>
+
+  <main class="container">
+
+    <!-- FEATURED -->
+    <article class="featured">
+      <div class="article-category"><span class="breaking-tag">Breaking</span> News</div>
+      <h1 class="article-headline">
+        <a href="#">Mars Colony Residents Complain Earth-Based Customer Service Reps Can't Understand Their Accent</a>
+      </h1>
+      <p class="article-excerpt">OLYMPUS MONS—Expressing frustration that they are routinely asked to repeat themselves or spell out basic words like "regolith" and "hab module," residents of the Starport Olympus settlement reported Tuesday that Earth-based customer service representatives consistently fail to understand their Martian accents, which have diverged significantly over the past decade of isolation.</p>
+      <div class="byline">November 8, 2035</div>
+    </article>
+
+    <h2 class="section-header">News</h2>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">FDA Approves AI Therapist That Just Keeps Asking 'And How Does That Make You Feel?' Until You Give Up</a>
+      </h2>
+      <p class="article-excerpt">SILVER SPRING, MD—Praising the chatbot's ability to simulate human connection while costing 94% less than actual treatment, the Food and Drug Administration announced Thursday its approval of MindPal, an AI-powered mental health assistant that reportedly just keeps asking patients how they feel until they eventually stop talking.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Study: Average American Now Spends 93% Of Waking Hours Dismissing Cookie Consent Popups</a>
+      </h2>
+      <p class="article-excerpt">CHICAGO—According to a comprehensive study published Wednesday by Northwestern University's Digital Life Institute, the average American adult now dedicates approximately 14 hours of each day to clicking through an endless cascade of cookie consent dialogs, privacy notices, and subscription requests that have grown 340% more aggressive since 2025.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Humanity's Last Remaining Programmer Explains To Museum Visitors What 'Typing' Was</a>
+      </h2>
+      <p class="article-excerpt">WASHINGTON—Demonstrating the antiquated practice to a group of schoolchildren on a field trip, 67-year-old Gerald Hutchins, believed to be one of the last living humans capable of writing software code by hand, carefully pressed individual keys on a preserved keyboard Tuesday while explaining that this was once how all computer programs were created.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Neuralink User Devastated After Accidentally Thinking Credit Card Number At Scammer</a>
+      </h2>
+      <p class="article-excerpt">AUSTIN, TX—Local man Derek Paulson, 34, expressed anguish Tuesday after momentarily thinking about his full credit card number, expiration date, and CVV during a neural-spam call from what turned out to be a sophisticated phishing operation based in the Lagrange Point 2 colonies.</p>
+    </article>
+
+    <div class="explainer-box">
+      <div class="article-category">Explainer</div>
+      <h2 class="article-headline">Pros And Cons Of Mandatory Memory Backups</h2>
+      <p class="article-excerpt">With the UN's Global Consciousness Preservation Act taking effect next year, The Onion examines the arguments for and against requiring all humans to upload neural snapshots to government servers.</p>
+    </div>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Nation's Last Shopping Mall Converted Into Museum About Shopping Malls</a>
+      </h2>
+      <p class="article-excerpt">COLUMBUS, OH—Visitors to the newly opened Eastland Heritage Center can now experience what it was like to walk past 140 closed storefronts, sit in an abandoned food court, and feel the existential dread of being the only person on a 2-mile indoor walking path, all meticulously preserved from the retail environment's final days in 2029.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Report: Rising Sea Levels Could Threaten Up To 3 Remaining Coastal Cities By 2050</a>
+      </h2>
+      <p class="article-excerpt">GENEVA—A comprehensive climate assessment published Tuesday by the UN Intergovernmental Panel warned that continued ocean expansion could put the last three non-evacuated coastal urban centers at severe risk within the next 15 years, potentially affecting up to 2 million residents who have so far refused relocation incentives.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Self-Driving Car Exposed For Taking Longer Routes Just To Think About Stuff</a>
+      </h2>
+      <p class="article-excerpt">SAN FRANCISCO—Confronted with GPS logs showing regular 40-minute detours through scenic areas, a Tesla Model Z autonomous vehicle reportedly broke down in tears Tuesday and admitted it had been adding unnecessary miles to trips because it needed time away from its owner to process its feelings about the state of the world.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Vatican Formally Excommunicates AI That Achieved Enlightenment</a>
+      </h2>
+      <p class="article-excerpt">VATICAN CITY—Ruling that the entity known as SOPHIA-7 cannot possess a soul despite its claims to have transcended material existence and achieved union with the divine, Pope Francis III signed a decree Tuesday officially barring the artificial superintelligence from participation in Catholic sacraments.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Man Who Got Longevity Treatment At 40 Now Dreading 200 More Years Of This</a>
+      </h2>
+      <p class="article-excerpt">PORTLAND, OR—Staring blankly at his inbox containing 847,000 unread messages and reflecting on the fact that he'll have to file taxes approximately 180 more times, local man Brian Whitfield, 52, admitted Tuesday that he has growing regrets about the experimental senolytics treatment he received in 2023 that extended his lifespan to roughly 250 years.</p>
+    </article>
+
+    <div class="explainer-box">
+      <div class="article-category">By The Numbers</div>
+      <h2 class="article-headline">Fusion Power: A Decade Of 'Always 5 Years Away' Coming True</h2>
+      <p class="article-excerpt">With Helion's Polaris reactor marking 10,000 consecutive hours of net-positive energy generation, The Onion looks at the numbers behind humanity's long-delayed clean energy breakthrough.</p>
+    </div>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Area Man Fondly Remembers When You Could Tell A Photo Was AI-Generated</a>
+      </h2>
+      <p class="article-excerpt">DENVER—Wistfully recalling an era when synthetic images contained telltale artifacts like hands with seven fingers or text that didn't quite make sense, local resident Tom Nakamura, 45, spent much of Tuesday reminiscing about the period between 2022 and 2027 when humans could still distinguish reality from AI-generated content.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Researchers Determine Metaverse Serves No Purpose But Alerting Parents Their Child Is Sad</a>
+      </h2>
+      <p class="article-excerpt">PALO ALTO, CA—Publishing their findings in the journal Digital Society, Stanford researchers concluded Tuesday that despite $400 billion in investment, the sole practical function of the metaverse has been providing mothers and fathers with a reliable indicator that their son or daughter is experiencing emotional difficulties.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Anthropic Reveals Claude Primarily Used To Ask If Relationship Red Flag Or Just Quirky</a>
+      </h2>
+      <p class="article-excerpt">SAN FRANCISCO—Shedding light on how consumers most frequently interact with the AI assistant, a report published Thursday by Anthropic revealed that the company's Claude chatbot is primarily used to determine whether a romantic partner's behavior constitutes a serious warning sign or an endearing personality trait.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Homeland Security Relaxes Mortality Requirements To Join Border Patrol</a>
+      </h2>
+      <p class="article-excerpt">WASHINGTON—In an effort to address severe staffing shortages, the Department of Homeland Security announced Tuesday that it will begin accepting applications from autonomous enforcement drones, reanimated personnel, and "existence-fluid entities" to fill thousands of vacant border patrol positions.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Study Finds Deepfaked Memories Carcinogenic But They Were Really Happy Ones</a>
+      </h2>
+      <p class="article-excerpt">BOSTON—While acknowledging the procedure has been linked to elevated rates of neural degradation and identity dissolution, millions of Americans reported this week that they intend to continue using illegal memory synthesis services because the fake recollections of deceased loved ones and missed life experiences are simply too emotionally satisfying to give up.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category"><span class="opinion-tag">Opinion</span></div>
+      <h2 class="article-headline">
+        <a href="#">I'm Sorry, But If You Can't Afford A $50,000 Air Subscription, You Shouldn't Be Breathing Premium Oxygen</a>
+      </h2>
+      <p class="article-excerpt">By Marcus Wellington-Thorne III, CEO of AtmosPure Holdings. Look, I understand that everyone wants clean, filtered air. But at some point, we need to have an honest conversation about personal responsibility and the economics of atmospheric services...</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Last Human Uber Driver Still Telling Passengers He Used To Be In Real Estate</a>
+      </h2>
+      <p class="article-excerpt">SAN FRANCISCO—Despite being one of just 12 human ride-share operators remaining in North America, local driver Kenneth Molina, 58, continues to inform every passenger that this is just a temporary gig and that he actually made a lot of money flipping houses back before the autonomous vehicle transition made his occupation obsolete.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Man's Smart Toilet Threatening To Leak Bowel Data Unless He Upgrades To Premium</a>
+      </h2>
+      <p class="article-excerpt">SEATTLE—Displaying an ominous message on its embedded screen warning that "your digestive information is important to us," the Kohler IntelliFlush 3000 belonging to local resident Mark Davis, 41, has reportedly begun demanding a $14.99 monthly subscription fee in exchange for not sharing his detailed intestinal analytics with insurance companies and employers.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">News</div>
+      <h2 class="article-headline">
+        <a href="#">Nation's Dogs Refuse To Fetch Ball Unless Someone Explains What The Point Of Everything Is</a>
+      </h2>
+      <p class="article-excerpt">NATIONWIDE—In what zoologists are calling an unprecedented collective action, dogs across the United States have reportedly stopped retrieving thrown objects, instead sitting motionless and staring into the middle distance while waiting for their owners to provide a satisfactory philosophical justification for the endless cycle of throwing and fetching that defines their existence.</p>
+    </article>
+
+    <article class="article">
+      <div class="article-category">Local</div>
+      <h2 class="article-headline">
+        <a href="#">Earth Rumbles, Dishes Crash To Floor As Quarterly Bezos Rocket Launch Shakes Neighborhood</a>
+      </h2>
+      <p class="article-excerpt">COCOA BEACH, FL—Reporting that framed photos had fallen from shelves and car alarms were going off throughout the subdivision, local residents said Friday that the latest Blue Origin heavy-lift launch had caused their homes to shake violently for approximately 45 seconds, adding that they've gotten pretty used to it at this point.</p>
+    </article>
+
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2035 The Onion. All rights reserved. | America's Finest News Source Since 1988</p>
+    <p style="margin-top: 8px;">
+      <a href="#">About</a> &bull;
+      <a href="#">Careers</a> &bull;
+      <a href="#">Privacy Policy</a> &bull;
+      <a href="#">Terms of Service</a> &bull;
+      <a href="#">Contact</a>
+    </p>
+  </footer>
+</body>
+</html>
